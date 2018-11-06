@@ -1,0 +1,4 @@
+.custom-textarea {
+    resize: vertical;
+    max-height: 100px;
+}
