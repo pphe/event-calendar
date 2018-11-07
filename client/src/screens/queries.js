@@ -43,5 +43,18 @@ export const GET_EVENT_CONFIG = {
     // }),
 };
 
-// export const ADD_EVENT = gql``;
-// export const ADD_EVENT_CONFIG = {};
+export const POST_EVENT = gql`
+    mutation {
+        postEvent(
+            title: $title,
+            host: $host,
+            location: $location,
+            description: $description,
+            start: $start,
+            end: $end,
+            allDay: $allDay
+        )
+    }
+`;
+
+// export const POST_EVENT_CONFIG = {};

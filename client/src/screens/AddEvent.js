@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 // import { graphql } from 'react-apollo';
-// import { ADD_EVENT, ADD_EVENT_CONFIG } from './queries';
+// import { POST_EVENT, POST_EVENT_CONFIG } from './queries';
 import NewEventForm from './NewEventForm';
 
 class AddEvent extends Component {

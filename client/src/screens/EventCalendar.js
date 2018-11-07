@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import BigCalendar from 'react-big-calendar';
-// would ideally be hosted in CDN and included in html file
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
 import { GET_EVENTS } from './queries';
@@ -22,7 +21,6 @@ class EventCalendar extends Component {
     constructor(...props) {
         super(...props);
         this.state = {
-            events: [],
             showDetails: false,
             showAddEvent: false,
             currentEventId: null,
@@ -37,11 +35,12 @@ class EventCalendar extends Component {
     }
 
     showDetails(event) {
-        if (event)
+        if (event) {
             this.setState({
                 currentEventId: event.id,
                 showDetails: !this.state.showDetails
             });
+        }
     }
 
     hideDetails() {

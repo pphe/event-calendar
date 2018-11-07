@@ -9,8 +9,9 @@ class EventDetail extends Component {
 
         if (loading) return <span>Loading...</span>;
         if (error) return <span>{error}</span>;
-
+        
         return (
+            
             <Modal show={this.props.show} onHide={this.props.close}>
                 <Modal.Header>
                     <Modal.Title>{getEvent.title}</Modal.Title>

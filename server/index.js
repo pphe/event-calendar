@@ -47,36 +47,49 @@ const events = [
 ];
 
 const typeDefs = gql`
- type Event {
-    id: Int!
-    title: String!
-    host: String!
-    location: String!
-    description: String!
-    start: String!
-    end: String!
-    allDay: Boolean
-}
+    type Event {
+        id: Int!
+        title: String!
+        host: String!
+        location: String!
+        description: String!
+        start: String!
+        end: String!
+        allDay: Boolean
+    }
 
-  type Query {
-    getEvents: [Event]
-    getEvent(id: Int!): Event
-  }
-
-  type Mutate {
-      addEvent: Event
-  }
+    input EventInput {
+        title: String!
+        host: String!
+        location: String!
+        description: String!
+        start: String!
+        end: String!
+        allDay: Boolean
+    }
+    
+    type Query {
+        getEvents: [Event]
+        getEvent(id: Int!): Event
+    }
+  
+    type Mutation {
+        postEvent(input: EventInput!): Event
+    }
 `;
 
 const resolvers = {
     Query: {
         getEvents: () => events,
-        getEvent: (root, args, ctx, info) =>
-            events.find(event => event.id === args.id)
+        getEvent: (obj, args, ctx, info) => events.find(event => event.id === args.id)
     },
 
-    Mutate: {
-        addEvent: () => { }
+    Mutation: {
+        postEvent: (obj, args, ctx, info) => {
+            args.id = events.length + 1;
+            events.push(args);
+            return args;
+        }
     }
 };
 
