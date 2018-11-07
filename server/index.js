@@ -3,17 +3,6 @@ const { ApolloServer, gql } = require('apollo-server-express');
 
 const port = 4000;
 
-const books = [
-    {
-        title: 'Harry Potter and the Chamber of Secrets',
-        author: 'J.K. Rowling',
-    },
-    {
-        title: 'Jurassic Park',
-        author: 'Michael Crichton',
-    },
-];
-
 const events = [
     {
         id: 1,
@@ -58,11 +47,6 @@ const events = [
 ];
 
 const typeDefs = gql`
-  type Book {
-    title: String
-    author: String
-  }
-
  type Event {
     id: Int!
     title: String!
@@ -75,7 +59,6 @@ const typeDefs = gql`
 }
 
   type Query {
-    books: [Book]
     getEvents: [Event]
     getEvent(id: Int!): Event
   }
@@ -87,7 +70,6 @@ const typeDefs = gql`
 
 const resolvers = {
     Query: {
-        books: () => books,
         getEvents: () => events,
         getEvent: (root, args, ctx, info) =>
             events.find(event => event.id === args.id)
