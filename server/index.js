@@ -86,9 +86,13 @@ const resolvers = {
 
     Mutation: {
         postEvent: (obj, args, ctx, info) => {
-            args.id = events.length + 1;
-            events.push(args);
-            return args;
+            args.input.id = events.length + 1;
+            if (!args.input.allDay) {
+                args.input.allDay = false;
+            }
+            const theEvent = Object.assign({}, args.input);
+            events.push(theEvent);
+            return theEvent;
         }
     }
 };

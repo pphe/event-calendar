@@ -13,7 +13,7 @@ export const GET_EVENTS = gql`
 `;
 
 export const GET_EVENT = gql`
-    query ($id: Int!) {
+    query getEvent($id: Int!) {
         getEvent(id: $id) {
             id
             title
@@ -31,7 +31,7 @@ export const GET_EVENT_CONFIG = {
     // options to include with the query, i.e. props passed
     // from the parent to the component making the query
     options: ({ id }) => ({
-        variables: { id: id }
+        variables: { id }
     }),
 
     // has the query results from Apollo (i.e. this.props.data._)
@@ -43,18 +43,25 @@ export const GET_EVENT_CONFIG = {
     // }),
 };
 
+// to do: figure out post query structure
+// mutation postEvent($input: EventInput!)
 export const POST_EVENT = gql`
-    mutation {
-        postEvent(
-            title: $title,
-            host: $host,
-            location: $location,
-            description: $description,
-            start: $start,
-            end: $end,
-            allDay: $allDay
-        )
+    mutation postEvent($newEvent: EventInput!) {
+        postEvent(input: $newEvent) {
+            id
+            title
+            host
+            location
+            description
+            start
+            end
+            allDay
+        }
     }
 `;
 
-// export const POST_EVENT_CONFIG = {};
+export const POST_EVENT_CONFIG = {
+    // options: ({ id }) => ({
+    //     variables: { id: id }
+    // }),
+};
