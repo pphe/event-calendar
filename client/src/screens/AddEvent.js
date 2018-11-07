@@ -10,12 +10,11 @@ class AddEvent extends Component {
         this.state = {
             event: {}
         };
-        this.addEvent = this.addEvent.bind(this);
+        this.postEvent = this.postEvent.bind(this);
     }
 
-    addEvent(event) {
+    postEvent(event) {
         console.log(event);
-        
     }
 
     render() {
@@ -31,7 +30,7 @@ class AddEvent extends Component {
                 </Modal.Header>
 
                 <Modal.Body>
-                    <NewEventForm addEvent={this.addEvent}
+                    <NewEventForm postEvent={this.postEvent}
                         close={this.props.close}
                         {...this.props}
                     />

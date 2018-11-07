@@ -17,7 +17,7 @@ class NewEventForm extends Component {
         event['description'] = this.description.value;
         event['start'] = convertToDate(this.startDate.value, this.startTime.value);
         event['end'] = convertToDate(this.endDate.value, this.endTime.value);
-        this.props.addEvent(event);
+        this.props.postEvent(event);
         this.props.close();
     }
 
