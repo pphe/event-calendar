@@ -69,8 +69,8 @@ class EventCalendar extends Component {
 
         /* BigCalendar expects Date objects for 'start' and 'end' fields
            so make a copy of data and modify those fields */
-        const copy = JSON.parse(JSON.stringify(getEvents));
-        copy.forEach(event => {
+        const eventsCopy = JSON.parse(JSON.stringify(getEvents));
+        eventsCopy.forEach(event => {
             event.start = new Date(event.start);
             event.end = new Date(event.end);
         });
@@ -96,7 +96,7 @@ class EventCalendar extends Component {
                     <BigCalendar
                         selectable
                         localizer={localizer}
-                        events={copy}
+                        events={eventsCopy}
                         defaultView={BigCalendar.Views.MONTH}
                         scrollToTime={new Date(2010, 0, 1)}
                         defaultDate={new Date()}
