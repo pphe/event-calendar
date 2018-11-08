@@ -67,7 +67,7 @@ class NewEventForm extends Component {
                     <Col sm={4}>
                         <FormControl type='date' value={startDate} onChange={onChangeStartDate} />
                     </Col>
-                    <Col componentClass={ControlLabel} sm={1}>Time</Col>
+                    <Col componentClass={ControlLabel} sm={1} smOffset={1}>Time</Col>
                     <Col sm={3}>
                         <FormControl type='time' value={startTime} step={timeInputStep}
                             onChange={onChangeStartTime} />
@@ -79,7 +79,7 @@ class NewEventForm extends Component {
                     <Col sm={4}>
                         <FormControl type='date' value={endDate} onChange={onChangeEndDate} />
                     </Col>
-                    <Col componentClass={ControlLabel} sm={1}>Time</Col>
+                    <Col componentClass={ControlLabel} sm={1} smOffset={1}>Time</Col>
                     <Col sm={3}>
                         <FormControl type='time' value={endTime} step={timeInputStep}
                             onChange={onChangeEndTime} />
@@ -91,18 +91,18 @@ class NewEventForm extends Component {
 }
 
 NewEventForm.propTypes = {
-    onChangeTitle: PropTypes.func,
-    onChangeHost: PropTypes.func,
-    onChangeLocation: PropTypes.func,
-    onChangeDescription: PropTypes.func,
-    onChangeStartDate: PropTypes.func,
-    onChangeStartTime: PropTypes.func,
-    onChangeEndDate: PropTypes.func,
-    onChangeEndTime: PropTypes.func,
-    startDate: PropTypes.string,
-    startTime: PropTypes.string,
-    endDate: PropTypes.string,
-    endTime: PropTypes.string
+    onChangeTitle: PropTypes.func.isRequired,
+    onChangeHost: PropTypes.func.isRequired,
+    onChangeLocation: PropTypes.func.isRequired,
+    onChangeDescription: PropTypes.func.isRequired,
+    onChangeStartDate: PropTypes.func.isRequired,
+    onChangeStartTime: PropTypes.func.isRequired,
+    onChangeEndDate: PropTypes.func.isRequired,
+    onChangeEndTime: PropTypes.func.isRequired,
+    startDate: PropTypes.string.isRequired,
+    startTime: PropTypes.string.isRequired,
+    endDate: PropTypes.string.isRequired,
+    endTime: PropTypes.string.isRequired
 };
 
 export default NewEventForm;

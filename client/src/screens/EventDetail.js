@@ -37,9 +37,9 @@ class EventDetail extends Component {
 }
 
 EventDetail.propTypes = {
-    id: PropTypes.number,
-    show: PropTypes.bool,
-    hide: PropTypes.func
+    id: PropTypes.number.isRequired,
+    show: PropTypes.bool.isRequired,
+    hide: PropTypes.func.isRequired
 };
 
 export default graphql(GET_EVENT, GET_EVENT_CONFIG)(EventDetail);

@@ -6,6 +6,7 @@
  * @returns {String} formatted as YYYY-MM-DD
  */
 export function dateToDateInput(theDate) {
+    if (!theDate) return '';
     return [
         theDate.getFullYear().toString().padStart(4, '0'),
         (theDate.getMonth() + 1).toString().padStart(2, '0'),
@@ -21,6 +22,7 @@ export function dateToDateInput(theDate) {
  * @returns {String} formatted as HH:MM (24-hours)
  */
 export function dateToTimeInput(theDate) {
+    if (!theDate) return '';
     return [
         theDate.getHours().toString().padStart(2, '0'),
         theDate.getMinutes().toString().padStart(2, '0')

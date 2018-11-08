@@ -87,8 +87,8 @@ class AddEvent extends Component {
 }
 
 AddEvent.propTypes = {
-    show: PropTypes.bool,
-    hide: PropTypes.func,
+    show: PropTypes.bool.isRequired,
+    hide: PropTypes.func.isRequired,
     selectedStart: PropTypes.object,
     selectedEnd: PropTypes.object
 };
