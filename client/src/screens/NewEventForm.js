@@ -1,104 +1,88 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, FormGroup, FormControl, Col, ControlLabel, Button } from 'react-bootstrap';
-import { dateToDateInput, dateToTimeInput, convertToDate } from '../util/date';
+import { Form, FormGroup, FormControl, Col, ControlLabel } from 'react-bootstrap';
 import './NewEventForm.css';
 
 class NewEventForm extends Component {
-    constructor(props) {
-        super(props);
-        this.submitForm = this.submitForm.bind(this);
-    }
-
-    submitForm() {
-        const event = {};
-        event.title = this.title.value;
-        event.host = this.host.value;
-        event.location = this.location.value;
-        event.description = this.description.value;
-        event.start = convertToDate(this.startDate.value, this.startTime.value);
-        event.end = convertToDate(this.endDate.value, this.endTime.value);
-        this.props.postEvent(event);
-    }
 
     /* validations should go here and set via validationState property
        for each FormControl component */
 
-    componentDidMount() {
-        // set initial values from selected time slots
-        this.startDate.value = dateToDateInput(this.props.selectedStart);
-        this.startTime.value = dateToTimeInput(this.props.selectedStart);
-        this.endDate.value = dateToDateInput(this.props.selectedEnd);
-        this.endTime.value = dateToTimeInput(this.props.selectedEnd);
-    }
-
     render() {
+        const {
+            onChangeTitle,
+            onChangeHost,
+            onChangeLocation,
+            onChangeDescription,
+            onChangeStartDate,
+            onChangeStartTime,
+            onChangeEndDate,
+            onChangeEndTime,
+            startDate,
+            startTime,
+            endDate,
+            endTime
+        } = this.props;
+
         // 30-min intervals for input time elements
         const timeInputStep = 1800;
         return (
-            <Form horizontal>
+            <Form horizontal >
                 <FormGroup controlId='title'>
                     <Col componentClass={ControlLabel} sm={2}>Title</Col>
-                    <Col sm={8}><FormControl inputRef={ref => this.title = ref}
-                        type='text' placeholder='Title' /></Col>
+                    <Col sm={9}>
+                        <FormControl type='text' placeholder='Title'
+                            onChange={onChangeTitle} />
+                    </Col>
                 </FormGroup>
 
                 <FormGroup controlId='host'>
                     <Col componentClass={ControlLabel} sm={2}>Host</Col>
-                    <Col sm={8}>
+                    <Col sm={9}>
                         <FormControl type='text' placeholder='Host'
-                            inputRef={ref => this.host = ref} />
+                            onChange={onChangeHost} />
                     </Col>
                 </FormGroup>
 
                 <FormGroup controlId='location'>
                     <Col componentClass={ControlLabel} sm={2}>Location</Col>
-                    <Col sm={8}>
+                    <Col sm={9}>
                         <FormControl type='text' placeholder='Location'
-                            inputRef={ref => this.location = ref} />
+                            onChange={onChangeLocation} />
                     </Col>
                 </FormGroup>
 
                 <FormGroup controlId='description'>
                     <Col componentClass={ControlLabel} sm={2}>Description</Col>
-                    <Col sm={8}>
-                        <FormControl componentClass='textarea'
+                    <Col sm={9}>
+                        <FormControl componentClass='textarea' placeholder='Description'
                             bsStyle='form-control custom-textarea'
-                            inputRef={ref => this.description = ref}
-                            placeholder='Description' />
+                            onChange={onChangeDescription}
+                        />
                     </Col>
                 </FormGroup>
 
                 <FormGroup controlId='start'>
                     <Col componentClass={ControlLabel} sm={2}>Start date</Col>
                     <Col sm={4}>
-                        <FormControl type='date' inputRef={ref => this.startDate = ref} />
+                        <FormControl type='date' value={startDate} onChange={onChangeStartDate} />
                     </Col>
                     <Col componentClass={ControlLabel} sm={1}>Time</Col>
                     <Col sm={3}>
-                        <FormControl type='time' step={timeInputStep}
-                            inputRef={ref => this.startTime = ref} />
+                        <FormControl type='time' value={startTime} step={timeInputStep}
+                            onChange={onChangeStartTime} />
                     </Col>
                 </FormGroup>
 
                 <FormGroup controlId='end'>
                     <Col componentClass={ControlLabel} sm={2}>End date</Col>
                     <Col sm={4}>
-                        <FormControl type='date' inputRef={ref => this.endDate = ref} />
+                        <FormControl type='date' value={endDate} onChange={onChangeEndDate} />
                     </Col>
                     <Col componentClass={ControlLabel} sm={1}>Time</Col>
                     <Col sm={3}>
-                        <FormControl type='time' step={timeInputStep}
-                            inputRef={ref => this.endTime = ref} />
-                    </Col>
-                </FormGroup>
-                
-                <FormGroup controlId='buttons'>
-                    <Col sm={2} smOffset={6}>
-                        <Button bsStyle="primary" onClick={this.submitForm}>Add Event</Button>
-                    </Col>
-                    <Col sm={1}>
-                        <Button bsStyle="default" onClick={this.props.close}>Cancel</Button>
+                        <FormControl type='time' value={endTime} step={timeInputStep}
+                            onChange={onChangeEndTime} />
                     </Col>
                 </FormGroup>
             </Form>
@@ -107,8 +91,18 @@ class NewEventForm extends Component {
 }
 
 NewEventForm.propTypes = {
-    postEvent: PropTypes.func,
-    close: PropTypes.func
-}
+    onChangeTitle: PropTypes.func,
+    onChangeHost: PropTypes.func,
+    onChangeLocation: PropTypes.func,
+    onChangeDescription: PropTypes.func,
+    onChangeStartDate: PropTypes.func,
+    onChangeStartTime: PropTypes.func,
+    onChangeEndDate: PropTypes.func,
+    onChangeEndTime: PropTypes.func,
+    startDate: PropTypes.string,
+    startTime: PropTypes.string,
+    endDate: PropTypes.string,
+    endTime: PropTypes.string
+};
 
 export default NewEventForm;

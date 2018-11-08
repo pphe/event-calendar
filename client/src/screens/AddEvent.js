@@ -1,46 +1,96 @@
 import React, { Component } from 'react';
-import { Modal } from 'react-bootstrap';
+import PropTypes from 'prop-types';
+import { Modal, Button, Col } from 'react-bootstrap';
 import { graphql } from 'react-apollo';
 import { POST_EVENT, POST_EVENT_CONFIG } from './queries';
 import NewEventForm from './NewEventForm';
+import { dateToDateInput, dateToTimeInput, convertToDate } from '../util/date';
 
 class AddEvent extends Component {
     constructor(props) {
         super(props);
-        this.postEvent = this.postEvent.bind(this);
+        this.state = {
+            title: null,
+            host: null,
+            location: null,
+            description: null,
+            startDate: dateToDateInput(props.selectedStart),
+            startTime: dateToTimeInput(props.selectedStart),
+            endDate: dateToDateInput(props.selectedEnd),
+            endTime: dateToTimeInput(props.selectedEnd)
+        };
     }
 
-    postEvent(event) {
-        const newEvent = {
-            eventInput: {
-                title: event.title,
-                host: event.host,
-                location: event.location,
-                description: event.description,
-                start: event.start,
-                end: event.end,
-            }
-        };
+    // handlers for onChange events of NewEventForm form components
+    onChangeTitle = (e) => this.setState({ title: e.target.value });
+    onChangeHost = (e) => this.setState({ host: e.target.value });
+    onChangeLocation = (e) => this.setState({ location: e.target.value });
+    onChangeDescription = (e) => this.setState({ description: e.target.value });
+    onChangeStartDate = (e) => this.setState({ startDate: e.target.value });
+    onChangeStartTime = (e) => this.setState({ startTime: e.target.value });
+    onChangeEndDate = (e) => this.setState({ endDate: e.target.value });
+    onChangeEndTime = (e) => this.setState({ endTime: e.target.value });
 
-        this.props.mutate({ variables: newEvent })
-            .then((props) => this.props.close())
+    submitForm = () => {
+        this.props.mutate({
+            variables: {
+                eventInput: {
+                    title: this.state.title,
+                    host: this.state.host,
+                    location: this.state.location,
+                    description: this.state.description,
+                    start: convertToDate(this.state.startDate, this.state.startTime),
+                    end: convertToDate(this.state.endDate, this.state.endTime)
+                }
+            }
+        })
+            .then((props) => this.props.hide())
             .catch((err) => console.log('[postEvent mutation]', err));
     }
 
     render() {
+        const { show, hide } = this.props;
         return (
-            <Modal show={this.props.show} onHide={this.props.close}>
+            <Modal show={show} onHide={hide}>
                 <Modal.Header>
                     <Modal.Title>Add new event</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
-                    <NewEventForm postEvent={this.postEvent} {...this.props} />
+                    <NewEventForm
+                        onChangeTitle={this.onChangeTitle}
+                        onChangeHost={this.onChangeHost}
+                        onChangeLocation={this.onChangeLocation}
+                        onChangeDescription={this.onChangeDescription}
+                        onChangeStartDate={this.onChangeStartDate}
+                        onChangeStartTime={this.onChangeStartTime}
+                        onChangeEndDate={this.onChangeEndDate}
+                        onChangeEndTime={this.onChangeEndTime}
+                        startDate={this.state.startDate}
+                        startTime={this.state.startTime}
+                        endDate={this.state.endDate}
+                        endTime={this.state.endTime}
+                    />
                 </Modal.Body>
+
+                <Modal.Footer>
+                    <Col sm={2} smOffset={6}>
+                        <Button bsStyle="primary" onClick={this.submitForm}>Add Event</Button>
+                    </Col>
+                    <Col sm={1}>
+                        <Button bsStyle="default" onClick={hide}>Cancel</Button>
+                    </Col>
+                </Modal.Footer>
             </Modal>
         );
     }
 }
 
-            
+AddEvent.propTypes = {
+    show: PropTypes.bool,
+    hide: PropTypes.func,
+    selectedStart: PropTypes.object,
+    selectedEnd: PropTypes.object
+};
+
 export default graphql(POST_EVENT, POST_EVENT_CONFIG)(AddEvent);

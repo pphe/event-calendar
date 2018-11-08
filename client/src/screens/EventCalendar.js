@@ -21,43 +21,30 @@ class EventCalendar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showDetails: false,
+            showEventDetail: false,
             showAddEvent: false,
             currentEventId: null,
             selectedStartDate: null,
             selectedEndDate: null
         };
-
-        this.showDetails = this.showDetails.bind(this);
-        this.hideDetails = this.hideDetails.bind(this);
-        this.addEvent = this.addEvent.bind(this);
-        this.closeEvent = this.closeEvent.bind(this);
     }
 
-    showDetails(event) {
+    hideEventDetail = () => this.setState({ showEventDetail: !this.state.showEventDetail });
+    showEventDetail = (event) => {
         if (event) {
             this.setState({
                 currentEventId: event.id,
-                showDetails: !this.state.showDetails
+                showEventDetail: !this.state.showEventDetail
             });
         }
     }
 
-    hideDetails() {
-        this.setState({ showDetails: !this.state.showDetails });
-    }
-
-    addEvent(event) {
+    hideAddEvent = () => this.setState({ showAddEvent: !this.state.showAddEvent });
+    showAddEvent = (event) => {
         this.setState({
             showAddEvent: !this.state.showAddEvent,
             selectedStartDate: event.start,
             selectedEndDate: event.end
-        });
-    }
-
-    closeEvent() {
-        this.setState({
-            showAddEvent: !this.state.showAddEvent,
         });
     }
 
@@ -77,16 +64,18 @@ class EventCalendar extends Component {
         return (
             <div>
                 {
-                    this.state.showDetails ?
-                        <EventDetail id={this.state.currentEventId}
-                            show={this.state.showDetails}
-                            close={this.hideDetails} />
+                    this.state.showEventDetail ?
+                        <EventDetail
+                            id={this.state.currentEventId}
+                            show={this.state.showEventDetail}
+                            hide={this.hideEventDetail} />
                         : null
                 }
                 {
                     this.state.showAddEvent ?
-                        <AddEvent show={this.state.showAddEvent}
-                            close={this.closeEvent}
+                        <AddEvent
+                            show={this.state.showAddEvent}
+                            hide={this.hideAddEvent}
                             selectedStart={this.state.selectedStartDate}
                             selectedEnd={this.state.selectedEndDate} />
                         : null
@@ -96,13 +85,8 @@ class EventCalendar extends Component {
                         selectable
                         localizer={localizer}
                         events={eventsCopy}
-                        defaultView={BigCalendar.Views.MONTH}
-                        scrollToTime={new Date(2010, 0, 1)}
-                        defaultDate={new Date()}
-                        onSelectEvent={(e) => this.showDetails(e)}
-                        onSelectSlot={(e) => this.addEvent(e)}
-                        startAccessor='start'
-                        endAccessor='end'
+                        onSelectEvent={(e) => this.showEventDetail(e)}
+                        onSelectSlot={(e) => this.showAddEvent(e)}
                     />
                 </div>
             </div>
