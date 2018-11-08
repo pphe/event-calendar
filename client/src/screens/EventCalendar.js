@@ -18,8 +18,8 @@ const calendarStyle = {
 };
 
 class EventCalendar extends Component {
-    constructor(...props) {
-        super(...props);
+    constructor(props) {
+        super(props);
         this.state = {
             showDetails: false,
             showAddEvent: false,
@@ -63,7 +63,6 @@ class EventCalendar extends Component {
 
     render() {
         const { loading, error, getEvents } = this.props.data;
-
         if (loading || !getEvents) return (<span>Loading...</span>);
         if (error) return (<span>{error}</span>);
 

@@ -6,12 +6,10 @@ import { GET_EVENT, GET_EVENT_CONFIG } from './queries';
 class EventDetail extends Component {
     render() {
         const { loading, error, getEvent } = this.props.data;
-
         if (loading) return <span>Loading...</span>;
         if (error) return <span>{error}</span>;
         
         return (
-            
             <Modal show={this.props.show} onHide={this.props.close}>
                 <Modal.Header>
                     <Modal.Title>{getEvent.title}</Modal.Title>

@@ -50,9 +50,9 @@ const typeDefs = gql`
     type Event {
         id: Int!
         title: String!
-        host: String!
-        location: String!
-        description: String!
+        host: String
+        location: String
+        description: String
         start: String!
         end: String!
         allDay: Boolean
@@ -60,9 +60,9 @@ const typeDefs = gql`
 
     input EventInput {
         title: String!
-        host: String!
-        location: String!
-        description: String!
+        host: String
+        location: String
+        description: String
         start: String!
         end: String!
         allDay: Boolean
@@ -87,9 +87,7 @@ const resolvers = {
     Mutation: {
         postEvent: (obj, args, ctx, info) => {
             args.input.id = events.length + 1;
-            if (!args.input.allDay) {
-                args.input.allDay = false;
-            }
+            if (!args.input.allDay) args.input.allDay = false;
             const theEvent = Object.assign({}, args.input);
             events.push(theEvent);
             return theEvent;

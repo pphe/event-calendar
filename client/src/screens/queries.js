@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const GET_EVENTS = gql`
-    query {
+    query getEvents {
         getEvents {
             id
             title
@@ -28,10 +28,10 @@ export const GET_EVENT = gql`
 `;
 
 export const GET_EVENT_CONFIG = {
-    // options to include with the query, i.e. props passed
-    // from the parent to the component making the query
-    options: ({ id }) => ({
-        variables: { id }
+    // options to include with the query, i.e. props of the
+    // graphql HOC component (the one making the call)
+    options: (props) => ({
+        variables: { id: props.id }
     }),
 
     // has the query results from Apollo (i.e. this.props.data._)
@@ -43,12 +43,9 @@ export const GET_EVENT_CONFIG = {
     // }),
 };
 
-// to do: figure out post query structure
-// mutation postEvent($input: EventInput!)
 export const POST_EVENT = gql`
-    mutation postEvent($newEvent: EventInput!) {
-        postEvent(input: $newEvent) {
-            id
+    mutation postEvent($eventInput: EventInput!) {
+        postEvent(input: $eventInput) {
             title
             host
             location
@@ -61,7 +58,45 @@ export const POST_EVENT = gql`
 `;
 
 export const POST_EVENT_CONFIG = {
-    // options: ({ id }) => ({
-    //     variables: { id: id }
-    // }),
+    options: {
+        refetchQueries: (mutationResult) => ['getEvents'],
+
+        /*
+            ### Updating UI ###
+            update option doesn't work but refetchQueries does. 
+           
+            reason: { data.postEvent } object in update field is
+            the eventInput data being sent TO the resolver so it's
+            missing the 'id' field, i.e. won't conform to the 
+            getEvents [Event] type.
+           
+            decision: don't generate an 'id' here just to be able to
+            insert it into the cache. let that logic stay in the 
+            resolver on the server side of things.
+        */
+
+        // update: (cache, { data: { postEvent } }) => {
+        //     const { getEvents } = cache.readQuery({ query: GET_EVENTS });
+        //     const updatedEvents = getEvents.concat([postEvent]);
+        //     cache.writeQuery({
+        //         query: GET_EVENTS,
+        //         data: { getEvents: updatedEvents }
+        //     });
+        // }
+    }
 };
+
+// export const POST_EVENT_CONFIG = {
+//     options: (props) => ({
+//         variables: {
+//             input: {
+//                 title: props.title,
+//                 host: props.host,
+//                 location: props.location,
+//                 description: props.description,
+//                 start: props.start,
+//                 end: props.end,
+//             }
+//         }
+//     }),
+// };

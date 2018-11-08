@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Form, FormGroup, FormControl, Col, ControlLabel, Button } from 'react-bootstrap';
 import './NewEventForm.css';
 import { dateToDateInput, dateToTimeInput, convertToDate } from '../util/date';
@@ -11,14 +12,13 @@ class NewEventForm extends Component {
 
     submitForm() {
         const event = {};
-        event['title'] = this.title.value;
-        event['host'] = this.host.value;
-        event['location'] = this.location.value;
-        event['description'] = this.description.value;
-        event['start'] = convertToDate(this.startDate.value, this.startTime.value);
-        event['end'] = convertToDate(this.endDate.value, this.endTime.value);
+        event.title = this.title.value;
+        event.host = this.host.value;
+        event.location = this.location.value;
+        event.description = this.description.value;
+        event.start = convertToDate(this.startDate.value, this.startTime.value);
+        event.end = convertToDate(this.endDate.value, this.endTime.value);
         this.props.postEvent(event);
-        this.props.close();
     }
 
     /* validations should go here and set via validationState property
@@ -103,6 +103,11 @@ class NewEventForm extends Component {
             </Form>
         );
     }
+}
+
+NewEventForm.propTypes = {
+    postEvent: PropTypes.func,
+    close: PropTypes.func
 }
 
 export default NewEventForm;

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import EventCalendar from './screens/EventCalendar';
 
 class Router extends Component {
