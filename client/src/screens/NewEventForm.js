@@ -92,6 +92,7 @@ class NewEventForm extends Component {
                             inputRef={ref => this.endTime = ref} />
                     </Col>
                 </FormGroup>
+                
                 <FormGroup controlId='buttons'>
                     <Col sm={2} smOffset={6}>
                         <Button bsStyle="primary" onClick={this.submitForm}>Add Event</Button>
