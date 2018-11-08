@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Form, FormGroup, FormControl, Col, ControlLabel, Button } from 'react-bootstrap';
-import './NewEventForm.css';
 import { dateToDateInput, dateToTimeInput, convertToDate } from '../util/date';
+import './NewEventForm.css';
 
 class NewEventForm extends Component {
     constructor(props) {
