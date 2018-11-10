@@ -32,6 +32,14 @@ class AddEvent extends Component {
     onChangeEndTime = (e) => this.setState({ endTime: e.target.value });
 
     submitForm = () => {
+        const start = convertToDate(this.state.startDate, this.state.startTime);
+        const end = convertToDate(this.state.endDate, this.state.endTime);
+
+        if (start.getTime() >= end.getTime()) {
+            window.alert('The start date must be before the end date!');
+            return;
+        }
+
         this.props.mutate({
             variables: {
                 eventInput: {
@@ -39,8 +47,8 @@ class AddEvent extends Component {
                     host: this.state.host,
                     location: this.state.location,
                     description: this.state.description,
-                    start: convertToDate(this.state.startDate, this.state.startTime),
-                    end: convertToDate(this.state.endDate, this.state.endTime)
+                    start: start,
+                    end: end
                 }
             }
         })
