@@ -39,5 +39,5 @@ export function dateToTimeInput(theDate) {
 export function convertToDate(theDate, theTime) {
     const date = theDate.split('-');
     date[1]--;
-    return new Date(...date, ...theTime.split(':')).toString();
+    return new Date(...date, ...theTime.split(':'));
 }

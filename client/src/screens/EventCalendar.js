@@ -53,13 +53,9 @@ class EventCalendar extends Component {
         if (loading || !getEvents) return (<span>Loading...</span>);
         if (error) return (<span>{error}</span>);
 
-        /* BigCalendar expects Date objects for 'start' and 'end' fields
-           so make a copy of data and modify those fields */
-        const eventsCopy = JSON.parse(JSON.stringify(getEvents));
-        eventsCopy.forEach(event => {
-            event.start = new Date(event.start);
-            event.end = new Date(event.end);
-        });
+        // BigCalendar expects event start and end fields to be
+        // any representation of a Date object:
+        // ex. via Date() toString(), toJSON(), getTime(), etc.
 
         return (
             <div>
@@ -84,7 +80,7 @@ class EventCalendar extends Component {
                     <BigCalendar
                         selectable
                         localizer={localizer}
-                        events={eventsCopy}
+                        events={getEvents}
                         onSelectEvent={(e) => this.showEventDetail(e)}
                         onSelectSlot={(e) => this.showAddEvent(e)}
                     />
