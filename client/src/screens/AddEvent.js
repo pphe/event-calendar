@@ -52,7 +52,7 @@ class AddEvent extends Component {
                 }
             }
         })
-            .then((props) => this.props.hide())
+            .then(props => this.props.hide())
             .catch((err) => console.log('[postEvent mutation]', err));
     }
 
