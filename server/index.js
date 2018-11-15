@@ -22,7 +22,7 @@ const events = [
         host: 'Me?',
         location: 'My house!',
         description: 'Potluck! Please feed me...',
-        start: new Date(2018, 11, 2, 0, 1).toJSON(),
+        start: new Date(2018, 11, 2).toJSON(),
         end: new Date(2018, 11, 2, 23, 59).getTime(),
         allDay: false
     },
