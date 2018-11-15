@@ -3,7 +3,7 @@ const { ApolloServer, gql } = require('apollo-server-express');
 const { GraphQLScalarType } = require('graphql');
 const { Kind } = require('graphql/language');
 
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 const events = [
     {
@@ -113,8 +113,8 @@ const resolvers = {
 };
 
 const app = express();
-// app.use(/* express middleware */)
 const server = new ApolloServer({ typeDefs, resolvers });
+// app.use(/* express middleware */)
+app.use(express.static(require('path').join(__dirname, '../client/build')));
 server.applyMiddleware({ app, path: '/graphql' });
-
 app.listen(port, () => console.log(`Listening on port ${port}.`));
